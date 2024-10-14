@@ -1,11 +1,14 @@
-from flask_smorest import Api, Blueprint 
+from flask_smorest import Api
 from flask import Flask
+import os
+from dotenv import load_dotenv
+from routes.login.login_controller import login_bp
 
-server = Flask(__name__) 
-api = Api(server)
 
-# Create a blueprint
-login_bp = Blueprint('login', 'login', url_prefix='/login')
+
+
+# Load environment variables
+load_dotenv()
 
 class APIConfig :
     API_TITLE = 'Login API'
@@ -16,3 +19,16 @@ class APIConfig :
     OPENAPI_SWAGGER_UI_PATH = '/swagger'
     OPENAPI_SWAGGER_UI_URL = 'https://cdn.jsdelivr.net/npm/swagger-ui-dist/'
     OPENAPI_REDOC_URL = 'https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js'
+    SECRET_KEY = os.getenv('SECRET_KEY')
+
+server = Flask(__name__) 
+server.config.from_object(APIConfig)
+api = Api(server)
+#api.register_blueprint(login_bp)
+
+@server.route('/')
+def index():
+    return 'Hello World'
+
+if __name__ == "__main__":
+  server.run(debug=True, port=5050, host='0.0.0.0')
