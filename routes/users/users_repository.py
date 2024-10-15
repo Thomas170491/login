@@ -14,7 +14,10 @@ class UserRepository:
 
     def get_by_id(self, id):
         return self.db.session.query(User).get(id)
-
+    
+    def get_by_username(self, username):
+        return self.db.session.query(User).filter_by(username=username).first()
+    
     def create(self, data):
         new_user = User(
             username=data['username'],
