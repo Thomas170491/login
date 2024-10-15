@@ -2,7 +2,6 @@ from flask_smorest import Api
 from flask import Flask
 import os
 from dotenv import load_dotenv
-from routes.login.login_controller import login_bp
 
 
 
