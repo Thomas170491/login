@@ -1,9 +1,13 @@
+import os
+import sys
+ 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__))))
+
+
 from flask_smorest import Api
 from flask import Flask
-import os
 from dotenv import load_dotenv
-
-
+from routes.login.login_controller import login
 
 
 # Load environment variables
@@ -23,7 +27,7 @@ class APIConfig :
 server = Flask(__name__) 
 server.config.from_object(APIConfig)
 api = Api(server)
-#api.register_blueprint(login_bp)
+api.register_blueprint(login)
 
 @server.route('/')
 def index():
